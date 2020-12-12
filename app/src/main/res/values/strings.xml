@@ -12,4 +12,14 @@
     <string name="password">Password</string>
     <string name="singin">Sing In</string>
     <string name="singup_msg">No account yet? Create one</string>
+    <string name="register_msg">Enter your Data !</string>
+    <string name="comfirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="login_field_error">Username or Password isn\'t correct</string>
+    <string name="register_field_empty">Username or Password is Empty</string>
+    <string name="register_field_password">Password and password confirmation not the same</string>
+    <string name="register_dialog_title">Register</string>
+    <string name="register_dialog_msg">Your account was create with success</string>
+    <string name="ok">Ok</string>
+    <string name="name">Name</string>
 </resources>
