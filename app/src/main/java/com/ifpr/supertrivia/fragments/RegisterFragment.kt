@@ -2,6 +2,7 @@ package com.ifpr.supertrivia.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,7 @@ class RegisterFragment : Fragment() {
 
         val user = User(email, name, password)
 
-        if (user.email == "" || user.password == "") {
+        if (user.email == "" || user.password == "" || user.name == "") {
             Toast.makeText(activity, R.string.register_field_empty, Toast.LENGTH_SHORT).show()
 
         } else {
@@ -48,7 +49,8 @@ class RegisterFragment : Fragment() {
             } else {
 
                 val dao = UserDAO()
-                dao.insert(user) {}
+
+                Log.i("users", dao.insert(user) {}.toString())
 
 
                 val build: AlertDialog.Builder = AlertDialog.Builder(activity)
