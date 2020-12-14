@@ -8,10 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ifpr.supertrivia.R
+import com.ifpr.supertrivia.dao.CategoryDAO
 import com.ifpr.supertrivia.model.Category
 
-class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
-//    private val dao
+import kotlinx.android.synthetic.main.item_category.view.*
+
+class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+    private val dao = CategoryDAO()
+    private var categories = mutableListOf<Category>()
+
+    init {
+        dao.getAll {
+            categories = it.toMutableList()
+            notifyDataSetChanged()
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
@@ -19,9 +30,8 @@ class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         R.layout.item_category
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount() = categories.size
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder =
         ViewHolder(
             LayoutInflater
@@ -31,10 +41,16 @@ class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
 
     override fun onBindViewHolder(holder: CategoryAdapter.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        if (categories.isNotEmpty()) {
+            val category = categories[position]
+            holder.fillView(category)
+        }
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun fillView(category: Category) {
+            itemView.txtCategory.text = category.name
+        }
 
     }
 }

@@ -4,4 +4,7 @@
     <item
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
+    <item
+        android:icon="@drawable/ic_ranking"
+        android:title="@string/ranking" />
 </menu>

@@ -9,5 +9,14 @@
         android:id="@+id/chooseLevelFragment"
         android:name="com.ifpr.supertrivia.fragments.ChooseLevelFragment"
         android:label="fragment_choose_level"
-        tools:layout="@layout/fragment_choose_level" />
+        tools:layout="@layout/fragment_choose_level" >
+        <action
+            android:id="@+id/navigateToRanking"
+            app:destination="@id/rankingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rankingFragment"
+        android:name="com.ifpr.supertrivia.fragments.RankingFragment"
+        android:label="fragment_ranking"
+        tools:layout="@layout/fragment_ranking" />
 </navigation>

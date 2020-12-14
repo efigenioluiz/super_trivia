@@ -1,5 +1,6 @@
 package com.ifpr.supertrivia.dao
 
+import android.util.Log
 import com.ifpr.supertrivia.model.Category
 import com.ifpr.supertrivia.network.service.CategotyService
 import retrofit2.Call
@@ -15,17 +16,21 @@ class CategoryDAO {
         .build()
 
     val service = retrofit.create(CategotyService::class.java)
+
     fun getAll(finished: (category: List<Category>) -> Unit) {
 
         service.getAll().enqueue(object : Callback<List<Category>> {
             override fun onResponse(call: Call<List<Category>>, response: Response<List<Category>>) {
 
                 val category = response.body()!!
+                Log.e("jsonapi", category.toString())
+//                Log.i("api", category[1].toString())
                 finished(category)
+                // return just data
             }
 
             override fun onFailure(call: Call<List<Category>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("jsonapi",t.toString())
             }
 
 
