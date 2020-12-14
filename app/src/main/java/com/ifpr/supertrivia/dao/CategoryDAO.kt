@@ -24,6 +24,7 @@ class CategoryDAO {
 
                 val category = response.body()!!
                 Log.e("jsonapi", category.toString())
+                Log.e("jsonapi", response.body().toString())
 //                Log.i("api", category[1].toString())
                 finished(category)
                 // return just data
