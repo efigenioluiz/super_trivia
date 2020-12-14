@@ -47,10 +47,10 @@ class LoginFragment : Fragment() {
         }
         return view
     }
-    private fun login(username: String, password: String, verify: Boolean = false) {
+    private fun login(email: String, password: String, verify: Boolean = false) {
 
 
-        if (username.isNotEmpty() && password.isNotEmpty()) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
             val dao = UserDAO()
 
 //            dao.login(username, password) {
