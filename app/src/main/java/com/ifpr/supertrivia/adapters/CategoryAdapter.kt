@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.model.Category
 
 class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -15,14 +16,19 @@ class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
         // retorno o layout R.layout....
+        R.layout.item_category
     }
 
     override fun getItemCount(): Int {
         TODO("Not yet implemented")
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
-        TODO("Not yet implemented")
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder =
+        ViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(viewType, parent, false)
+        )
+
 
     override fun onBindViewHolder(holder: CategoryAdapter.ViewHolder, position: Int) {
         TODO("Not yet implemented")
