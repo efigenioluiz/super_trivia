@@ -4,10 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 
 data class User(
-    @SerializedName("username") var email: String,
+    @SerializedName("email") var email: String,
     @SerializedName("name") var name: String,
     var password: String,
-    var enabled: Boolean = true
 ) {
     var id: Long? = null
 

@@ -12,7 +12,7 @@ interface UserService {
     fun getUser(@Path("id") id: Long): Call<User>
 
 
-    @POST("users")
+    @POST("/users")
     @Headers("Content-Type: application/json")
     fun insert(@Body user: User): Call<User>
 

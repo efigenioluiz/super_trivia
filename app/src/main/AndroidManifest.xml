@@ -13,8 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".AcessActivity"
-            tools:ignore="Instantiatable">
+            android:name=".AcessActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,8 +37,6 @@
             android:label="@string/title_activity_acess"
             tools:ignore="Instantiatable">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

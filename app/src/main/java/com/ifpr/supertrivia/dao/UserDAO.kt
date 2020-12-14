@@ -1,5 +1,6 @@
 package com.ifpr.supertrivia.dao
 
+import android.util.Log
 import com.ifpr.supertrivia.model.User
 import com.ifpr.supertrivia.network.service.UserService
 import retrofit2.Call
@@ -56,10 +57,20 @@ class UserDAO {
     fun insert(user: User, finished: (User) -> Unit) {
         service.insert(user ).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                val user = response.body()!!
-                finished(user)
+
+                if(!response.isSuccessful){
+                    Log.e("tag", response.code().toString())
+
+                }else{
+                    val user = response.body()!!
+                    Log.e("tag", response.code().toString())
+                    finished(user)
+                }
             }
-            override fun onFailure(call: Call<User>, t: Throwable) { }
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.e("tag", t.toString())
+                Log.e("tag", call.toString())
+            }
         })
     }
 
