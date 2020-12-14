@@ -35,19 +35,19 @@ class UserDAO {
     }
 
     fun login(username: String,password: String, finished: (User) -> Unit) {
-        service.login(username,password).enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+        service.login(username,password).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.body() != null){
 
-                    if(response.body()!!.isNotEmpty()) {
-                        val user = response.body()!!.first()
+                    if(response.isSuccessful) {
+                        val user = response.body()!!
                         finished(user)
                     }
 
                 }
             }
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            override fun onFailure(call: Call<User>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 

@@ -19,8 +19,11 @@ interface UserService {
     @DELETE("users/{id}")
     fun delete(@Path("id") id: Long): Call<Void>
 
-    @GET("users?")
-    fun login(@Query("username") username: String, @Query("password") password: String): Call<List<User>>
+//    Authorization: <token>
+
+    @POST("/users/auth/")
+    @Headers("Authorization")
+    fun login(@Query("email") email: String, @Query("password",) password: String): Call<User>
 
     @PATCH("users/{id}")
     @Headers("Content-Type: application/json")
