@@ -1,5 +1,7 @@
 package com.ifpr.supertrivia.network.service
 import com.ifpr.supertrivia.model.user.User
+import com.ifpr.supertrivia.model.user.UserCallback
+import com.ifpr.supertrivia.model.user.UserInput
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,7 +16,7 @@ interface UserService {
 
     @POST("/users")
     @Headers("Content-Type: application/json")
-    fun insert(@Body user: User): Call<User>
+    fun insert(@Body userInput: UserInput): Call<UserCallback>
 
     @DELETE("users/{id}")
     fun delete(@Path("id") id: Long): Call<Void>

@@ -29,7 +29,7 @@ class CategoryDAO {
                     val categories = callBack.body()!!
                     Log.e("jsonapi", categories.toString())
 
-                    finished(categories.data.categories)
+                    categories.data?.let { finished(it.categories) }
                 }
 
             }

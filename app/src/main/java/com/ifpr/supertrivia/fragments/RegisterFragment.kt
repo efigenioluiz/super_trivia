@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.UserDAO
-import com.ifpr.supertrivia.model.user.User
+import com.ifpr.supertrivia.model.user.UserInput
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
@@ -36,23 +36,26 @@ class RegisterFragment : Fragment() {
 
     private fun register(email: String, password: String, name: String, confirm: String) {
 
-        val user = User(email, name, password)
+        val userInput = UserInput(email, name, password)
 
-        if (user.email == "" || user.password == "" || user.name == "") {
+        if (userInput.email == "" || userInput.password == "" || userInput.name == "") {
             Toast.makeText(activity, R.string.register_field_empty, Toast.LENGTH_SHORT).show()
 
         } else {
 
-            if (user.password != confirm) {
+            if (userInput.password != confirm) {
+                Log.e("jsonapi", userInput.password)
+                Log.e("jsonapi", confirm)
                 Toast.makeText(activity, R.string.register_field_password, Toast.LENGTH_SHORT)
                     .show()
             } else {
 
                 val dao = UserDAO()
 
-                Log.i("users", dao.insert(user) {}.toString())
+                dao.insert(userInput) {
+                    Log.e("callback", it.token)
 
-
+                }
                 val build: AlertDialog.Builder = AlertDialog.Builder(activity)
                 build.setTitle(R.string.register_dialog_title)
                 build.setMessage(R.string.register_dialog_msg)
@@ -67,7 +70,6 @@ class RegisterFragment : Fragment() {
 
                 val alertDialog: AlertDialog = build.create()
                 alertDialog.show()
-
             }
         }
 

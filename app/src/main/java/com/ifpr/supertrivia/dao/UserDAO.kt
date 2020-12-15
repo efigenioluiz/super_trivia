@@ -2,6 +2,8 @@ package com.ifpr.supertrivia.dao
 
 import android.util.Log
 import com.ifpr.supertrivia.model.user.User
+import com.ifpr.supertrivia.model.user.UserCallback
+import com.ifpr.supertrivia.model.user.UserInput
 import com.ifpr.supertrivia.network.service.UserService
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,9 +56,9 @@ class UserDAO {
 
         })
     }
-    fun insert(user: User, finished: (User) -> Unit) {
-        service.insert(user ).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
+    fun insert(userInput: UserInput, finished: (User) -> Unit) {
+        service.insert(userInput ).enqueue(object : Callback<UserCallback> {
+            override fun onResponse(call: Call<UserCallback>, response: Response<UserCallback>) {
 
                 if(!response.isSuccessful){
                     Log.e("tag", response.code().toString())
@@ -64,12 +66,15 @@ class UserDAO {
                 }else{
                     val user = response.body()!!
                     Log.e("tag", response.code().toString())
-                    finished(user)
+
+
+                    Log.e("tag", user.status)
+                    finished(user.data.user!!)
                 }
             }
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("tag", t.toString())
-                Log.e("tag", call.toString())
+            override fun onFailure(call: Call<UserCallback>, t: Throwable) {
+                Log.e("failure", t.toString())
+                Log.e("failure", call.toString())
             }
         })
     }
