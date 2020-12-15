@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.item_category.view.*
 class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val dao = CategoryDAO()
     private var categories = listOf<Category>()
+    private var categorySelect: Int = 0
+    private var select: Boolean = false
 
     init {
         dao.getAll {
@@ -22,7 +24,14 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         }
     }
 
-    override fun getItemViewType(position: Int)= R.layout.item_category
+    override fun getItemViewType(position: Int): Int {
+
+        return if (select && position == categorySelect ) {
+            R.layout.item_category_select
+        } else {
+            R.layout.item_category
+        }
+    }
 
 
     override fun getItemCount() = categories.size
@@ -45,6 +54,16 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun fillView(category: Category) {
             itemView.txtCategory.text = category.name
+
+            itemView.setOnClickListener {
+                select = !select
+                Log.e("jsonapi", category.toString())
+                val position =  categories.indexOf(category)
+
+                Log.e("jsonapi", position.toString())
+                categorySelect = position
+                notifyItemChanged(position)
+            }
         }
 
     }
