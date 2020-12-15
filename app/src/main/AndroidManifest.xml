@@ -30,14 +30,12 @@
             android:value="true" />
 
         <activity
-            android:name=".SplashActivity"
-            android:label="@string/title_activity_splash">
+            android:name=".AcessActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AcessActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
 
 
@@ -45,10 +43,13 @@
             </intent-filter>
         </activity>
         <activity
+
             android:name=".MainActivity"
             android:label="@string/title_activity_acess"
             tools:ignore="Instantiatable">
             <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

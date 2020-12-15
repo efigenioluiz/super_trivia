@@ -1,34 +1,29 @@
 package com.ifpr.supertrivia.adapters
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.CategoryDAO
-import com.ifpr.supertrivia.model.Category
+import com.ifpr.supertrivia.model.category.Category
 
 import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val dao = CategoryDAO()
-    private var categories = mutableListOf<Category>()
+    private var categories = listOf<Category>()
 
     init {
         dao.getAll {
-            categories = it.toMutableList()
+            categories = it
             notifyDataSetChanged()
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-        // retorno o layout R.layout....
-        R.layout.item_category
-    }
+    override fun getItemViewType(position: Int)= R.layout.item_category
+
 
     override fun getItemCount() = categories.size
 
