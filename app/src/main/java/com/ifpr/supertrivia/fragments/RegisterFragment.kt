@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.UserDAO
-import com.ifpr.supertrivia.model.User
+import com.ifpr.supertrivia.model.user.User
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 

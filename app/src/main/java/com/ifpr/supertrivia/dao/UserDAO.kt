@@ -1,7 +1,7 @@
 package com.ifpr.supertrivia.dao
 
 import android.util.Log
-import com.ifpr.supertrivia.model.User
+import com.ifpr.supertrivia.model.user.User
 import com.ifpr.supertrivia.network.service.UserService
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,7 +74,7 @@ class UserDAO {
         })
     }
 
-    fun update(user: User, finished: ( User) -> Unit) {
+    fun update(user: User, finished: (User) -> Unit) {
         service.update(user.id!!, user).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 val user = response.body()!!

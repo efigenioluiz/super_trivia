@@ -12,6 +12,7 @@ import com.ifpr.supertrivia.model.category.Category
 import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
     private val dao = CategoryDAO()
     private var categories = listOf<Category>()
     private var categorySelect: Int = 0
@@ -57,10 +58,10 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
             itemView.setOnClickListener {
                 select = !select
-                Log.e("jsonapi", category.toString())
+//                Log.e("jsonapi", category.toString())
                 val position =  categories.indexOf(category)
 
-                Log.e("jsonapi", position.toString())
+//                Log.e("jsonapi", position.toString())
                 categorySelect = position
                 notifyItemChanged(position)
             }
