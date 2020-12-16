@@ -23,12 +23,18 @@ class ChooseLevelFragment : Fragment() {
 
         adapter = CategoryAdapter()
 
+
+
         view.recyclerView.adapter = adapter
+//        val fanLayoutManager =  FanLayoutManager(requireContext());
+//        view.recyclerView.layoutManager = fanLayoutManager;
+
         view.recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         view.progress.max = 3
         view.progress.min = 1
+
 
         return view
     }

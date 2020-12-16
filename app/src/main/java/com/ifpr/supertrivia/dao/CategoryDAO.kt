@@ -16,6 +16,7 @@ class CategoryDAO {
         .baseUrl(url).addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
     val service = retrofit.create(CategotyService::class.java)
 
     fun getAll(finished: (category: List<Category>) -> Unit) {

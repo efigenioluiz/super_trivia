@@ -3,11 +3,11 @@ package com.ifpr.supertrivia.fragments
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.UserDAO
@@ -54,26 +54,30 @@ class RegisterFragment : Fragment() {
 
                 dao.insert(userInput) {
                     Log.e("callback", it.token)
+                    Log.e("callback", it.email)
 
-                }
-                val build: AlertDialog.Builder = AlertDialog.Builder(activity)
-                build.setTitle(R.string.register_dialog_title)
-                build.setMessage(R.string.register_dialog_msg)
+                    val build: AlertDialog.Builder = AlertDialog.Builder(activity)
+                    build.setTitle(R.string.register_dialog_title)
+                    build.setMessage(R.string.register_dialog_msg)
 
-                build.setPositiveButton(R.string.ok) { dialog, which ->
-
+                    build.setPositiveButton(R.string.ok) { dialog, which ->
 
                     // register user in database
                     findNavController().navigate(R.id.navigateToLogin)
                     dialog.dismiss()
+                    }
+
+                    val alertDialog: AlertDialog = build.create()
+                    alertDialog.show()
+
                 }
 
-                val alertDialog: AlertDialog = build.create()
-                alertDialog.show()
             }
         }
 
 
     }
+
 }
+
 

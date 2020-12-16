@@ -4,6 +4,7 @@ import android.util.Log
 import com.ifpr.supertrivia.model.user.User
 import com.ifpr.supertrivia.model.user.UserCallback
 import com.ifpr.supertrivia.model.user.UserInput
+import com.ifpr.supertrivia.model.user.UserLogin
 import com.ifpr.supertrivia.network.service.UserService
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,20 +37,20 @@ class UserDAO {
         })
     }
 
-    fun login(username: String,password: String, finished: (User) -> Unit) {
-        service.login(username,password).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
+    fun login(userLogin: UserLogin, finished: (User) -> Unit) {
+        service.login(userLogin).enqueue(object : Callback<UserCallback> {
+            override fun onResponse(call: Call<UserCallback>, response: Response<UserCallback>) {
                 if(response.body() != null){
 
                     if(response.isSuccessful) {
                         val user = response.body()!!
-                        finished(user)
+                        finished(user.data.user!!)
                     }
 
                 }
             }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
+            override fun onFailure(call: Call<UserCallback>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
@@ -71,6 +72,7 @@ class UserDAO {
                     Log.e("tag", user.status)
                     finished(user.data.user!!)
                 }
+
             }
             override fun onFailure(call: Call<UserCallback>, t: Throwable) {
                 Log.e("failure", t.toString())

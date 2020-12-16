@@ -2,6 +2,7 @@ package com.ifpr.supertrivia.network.service
 import com.ifpr.supertrivia.model.user.User
 import com.ifpr.supertrivia.model.user.UserCallback
 import com.ifpr.supertrivia.model.user.UserInput
+import com.ifpr.supertrivia.model.user.UserLogin
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -25,7 +26,7 @@ interface UserService {
 
     @POST("auth/")
     @Headers("Content-Type: application/json")
-    fun login(@Query("email") email: String, @Query("password",) password: String): Call<User>
+    fun login(@Body userInput: UserLogin) : Call<UserCallback>
 
     @PATCH("users/{id}")
     @Headers("Content-Type: application/json")

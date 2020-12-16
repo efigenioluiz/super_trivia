@@ -13,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.ifpr.supertrivia.MainActivity
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.UserDAO
+import com.ifpr.supertrivia.model.user.UserInput
+import com.ifpr.supertrivia.model.user.UserLogin
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -30,6 +32,7 @@ class LoginFragment : Fragment() {
         if (sharedPref != null) {
             val username = sharedPref.getString("email", "")
             val password = sharedPref.getString("password", "")
+            val token = sharedPref.getString("token", "")
             login(username.toString(), password.toString(), false)
 
         }
@@ -42,50 +45,59 @@ class LoginFragment : Fragment() {
             )
         }
 
-        view.singup.setOnClickListener{
+        view.singup.setOnClickListener {
             nextTo()
         }
         return view
     }
+
     private fun login(email: String, password: String, verify: Boolean = false) {
 
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             val dao = UserDAO()
 
-//            dao.login(username, password) {
-//                Log.i("user", it.toString())
-//
-//                val user = it
-//
-//                if (user.id != null) {
-//                    val sharedPref =
-//                        activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
-//
-//                    if (sharedPref != null) {
-//                        with(sharedPref.edit()) {
-//                            putString("email", user.email)
-//                            putString("password", user.password)
-//                            commit()
-//                        }
-//                    }
-//
-//                    Log.i("tag",it.toString())
-//                    val intent = Intent(activity, MainActivity::class.java)
-//                    intent.flags =
-//                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//
-//                    startActivity(intent)
-//                }
-//
-//            }
-            if (verify)
+            val userLogin = UserLogin(email, password)
+
+            try {
+
+
+                dao.login(userLogin) {
+                    Log.i("user", it.toString())
+
+                    val user = it
+
+                    val sharedPref =
+                        activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
+
+                    if (sharedPref != null) {
+                        with(sharedPref.edit()) {
+                            putString("email", user.email)
+                            putString("password", user.password)
+                            putString("token", user.token)
+                            commit()
+                        }
+                    }
+
+                    Log.i("tag", it.toString())
+                    val intent = Intent(activity, MainActivity::class.java)
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                    startActivity(intent)
+
+                }
+            }catch (e: Exception){
                 Toast.makeText(activity, R.string.login_field_error, Toast.LENGTH_SHORT).show()
+            }
+//            if (verify)
+//                Toast.makeText(activity, R.string.login_field_error, Toast.LENGTH_SHORT).show()
 
         }
 
 
     }
+
     private fun nextTo() {
         findNavController().navigate(R.id.navigateToRegister)
     }
