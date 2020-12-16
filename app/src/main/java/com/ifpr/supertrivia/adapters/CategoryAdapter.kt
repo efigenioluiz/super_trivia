@@ -25,7 +25,7 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
                 categories = it
                 notifyDataSetChanged()
             }
-        }, 500)
+        }, 0)
     }
 
     override fun getItemViewType(position: Int): Int {

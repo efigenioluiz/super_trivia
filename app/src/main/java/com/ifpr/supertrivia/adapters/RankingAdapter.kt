@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.RankingDAO
 import com.ifpr.supertrivia.model.ranking.RankingUser
 import kotlinx.android.synthetic.main.item_category.view.*
@@ -26,6 +27,8 @@ class RankingAdapter() : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
     }
 
     override fun getItemCount() = rankings.size
+
+    override fun getItemViewType(position: Int): Int = R.layout.item_ranking
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingAdapter.ViewHolder =
         ViewHolder(
