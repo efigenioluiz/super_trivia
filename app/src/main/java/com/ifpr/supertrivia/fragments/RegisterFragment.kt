@@ -53,8 +53,8 @@ class RegisterFragment : Fragment() {
                 val dao = UserDAO()
 
                 dao.insert(userInput) {
-                    Log.e("callback", it.token)
                     Log.e("callback", it.email)
+                    Log.e("callback", it.token)
 
                     val build: AlertDialog.Builder = AlertDialog.Builder(activity)
                     build.setTitle(R.string.register_dialog_title)
