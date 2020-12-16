@@ -1,22 +1,26 @@
 package com.ifpr.supertrivia.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.ifpr.supertrivia.MainActivity
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.dao.UserDAO
-import com.ifpr.supertrivia.model.user.UserInput
 import com.ifpr.supertrivia.model.user.UserLogin
+import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
+
 
 class LoginFragment : Fragment() {
 
@@ -30,10 +34,11 @@ class LoginFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
 
         if (sharedPref != null) {
-            val username = sharedPref.getString("email", "")
+            val email = sharedPref.getString("email", "")
             val password = sharedPref.getString("password", "")
             val token = sharedPref.getString("token", "")
-            login(username.toString(), password.toString(), false)
+            val userLogin = UserLogin(email!!, password!!)
+            login(email!!, password!!, false)
 
         }
 
@@ -62,8 +67,31 @@ class LoginFragment : Fragment() {
             try {
 
 
+                val build: AlertDialog.Builder = AlertDialog.Builder(activity)
+
+                build.setMessage(getString(R.string.loading))
+//                val gifImageView = ImageView(context)
+
+//                Glide.with(requireActivity()).load("https://1.bp.blogspot.com/-yIhXlQfYN1E/WMksG192LLI/AAAAAAAAA9w/txsqdQfykVksDEFshayeN54c0Gu6C3AAwCLcB/s1600/glow.gif")
+//                    .into(gifImageView)
+//
+//                build.setView(gifImageView)
+
+
+//                build.setPositiveButton(R.string.ok) { dialog, which ->
+//
+//                    // register user in database
+//                   //findNavController().navigate(R.id.navigateToLogin)
+//                    dialog.dismiss()
+//                }
+
+                val alertDialog: AlertDialog = build.create()
+                alertDialog.show()
+
                 dao.login(userLogin) {
                     Log.i("user", it.toString())
+
+                    alertDialog.dismiss()
 
                     val user = it
 
@@ -87,7 +115,7 @@ class LoginFragment : Fragment() {
                     startActivity(intent)
 
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Toast.makeText(activity, R.string.login_field_error, Toast.LENGTH_SHORT).show()
             }
 //            if (verify)

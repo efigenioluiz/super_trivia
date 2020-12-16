@@ -11,5 +11,9 @@
         android:icon="@drawable/ic_ranking"
         android:title="@string/ranking" />
 
+    <item
+        android:icon="@drawable/ic_ranking"
+        android:title="@string/ranking" />
+
 
 </menu>
