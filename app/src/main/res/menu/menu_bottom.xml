@@ -2,16 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/gameFragment"
+        android:icon="@drawable/ic_game"
+        android:title="@string/play" />
 
+    <item
         android:id="@+id/chooseLevelFragment"
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
-    <item
-        android:id="@+id/rankingFragment"
-        android:icon="@drawable/ic_ranking"
-        android:title="@string/ranking" />
+
 
     <item
+        android:id="@+id/rankingFragment"
         android:icon="@drawable/ic_ranking"
         android:title="@string/ranking" />
 

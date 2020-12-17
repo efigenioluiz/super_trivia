@@ -13,10 +13,18 @@
         <action
             android:id="@+id/navigateToRanking"
             app:destination="@id/rankingFragment" />
+        <action
+            android:id="@+id/navigateToGame"
+            app:destination="@id/gameFragment" />
     </fragment>
     <fragment
         android:id="@+id/rankingFragment"
         android:name="com.ifpr.supertrivia.fragments.RankingFragment"
         android:label="fragment_ranking"
         tools:layout="@layout/fragment_ranking" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.ifpr.supertrivia.fragments.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
 </navigation>
