@@ -36,8 +36,8 @@ class LoginFragment : Fragment() {
         if (sharedPref != null) {
             val email = sharedPref.getString("email", "")
             val password = sharedPref.getString("password", "")
-            val token = sharedPref.getString("token", "")
-            val userLogin = UserLogin(email!!, password!!)
+//            val token = sharedPref.getString("token", "")
+//            val userLogin = UserLogin(email!!, password!!)
             login(email!!, password!!, false)
 
         }
@@ -70,6 +70,7 @@ class LoginFragment : Fragment() {
                 val build: AlertDialog.Builder = AlertDialog.Builder(activity)
 
                 build.setMessage(getString(R.string.loading))
+                 build.setCancelable(false)
 //                val gifImageView = ImageView(context)
 
 //                Glide.with(requireActivity()).load("https://1.bp.blogspot.com/-yIhXlQfYN1E/WMksG192LLI/AAAAAAAAA9w/txsqdQfykVksDEFshayeN54c0Gu6C3AAwCLcB/s1600/glow.gif")
@@ -93,16 +94,18 @@ class LoginFragment : Fragment() {
 
                     alertDialog.dismiss()
 
-                    val user = it
+                    it
 
                     val sharedPref =
                         activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
 
                     if (sharedPref != null) {
                         with(sharedPref.edit()) {
-                            putString("email", user.email)
-                            putString("password", user.password)
-                            putString("token", user.token)
+                            putString("email", it.email)
+                            putString("password", password)
+                            putString("token", it.token)
+
+
                             commit()
                         }
                     }

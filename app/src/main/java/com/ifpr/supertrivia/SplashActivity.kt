@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
                 }else{
                     val build: AlertDialog.Builder = AlertDialog.Builder(this)
                     build.setMessage(R.string.no_internet)
-
+                    build.setCancelable(false)
                     build.setPositiveButton(R.string.ok) { dialog, which ->
 
 
