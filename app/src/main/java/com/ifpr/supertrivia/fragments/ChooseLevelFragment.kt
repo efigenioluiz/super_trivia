@@ -14,6 +14,7 @@ import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.CategoryAdapter
 import com.ifpr.supertrivia.dao.CategoryDAO
 import com.ifpr.supertrivia.dao.GameDAO
+import com.ifpr.supertrivia.model.Difficulty
 import com.ifpr.supertrivia.model.category.Category
 import kotlinx.android.synthetic.main.fragment_choose_level.view.*
 import java.lang.Integer.parseInt
@@ -66,13 +67,16 @@ class ChooseLevelFragment : Fragment() {
     private fun setSetup(category: Category?, lvl: Int) {
         val daoGame = GameDAO()
 
+
         if (category != null) {
+            val difficulty = Difficulty(lvl)
+            Log.i("DF", difficulty.toString())
 
             val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
             val token = sharedPref?.getString("token", "")
 
             if (token != null) {
-                daoGame.startGame(token) {
+                daoGame.startGameWhitSetup(token,difficulty.difficulty,category.id) {
 
                 }
             }
