@@ -1,5 +1,6 @@
 package com.ifpr.supertrivia.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.CategoryAdapter
 import com.ifpr.supertrivia.dao.CategoryDAO
 import com.ifpr.supertrivia.dao.GameDAO
+import com.ifpr.supertrivia.dao.QuestionDAO
 import com.ifpr.supertrivia.model.Difficulty
 import com.ifpr.supertrivia.model.category.Category
 import kotlinx.android.synthetic.main.fragment_choose_level.view.*
@@ -64,8 +69,10 @@ class ChooseLevelFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("ResourceType")
     private fun setSetup(category: Category?, lvl: Int) {
         val daoGame = GameDAO()
+        val daoQuestion = QuestionDAO()
 
 
         if (category != null) {
@@ -76,10 +83,26 @@ class ChooseLevelFragment : Fragment() {
             val token = sharedPref?.getString("token", "")
 
             if (token != null) {
-                daoGame.startGameWhitSetup(token,difficulty.difficulty,category.id) {
+                daoGame.startGameWhitSetup(token, difficulty.difficulty, category.id) {
+
+                    daoQuestion.nextQuestion(token) {
+                        val bundle = Bundle()
+
+                        val gson = Gson()
+                        val questionJson = gson.toJson(it)
+
+                        bundle.putBoolean("withSetup", true)
+                        bundle.putString("question",questionJson)
+
+                        findNavController().navigate(R.id.gameFragment,bundle)
+                    }
 
                 }
+
             }
+        } else {
+            Toast.makeText(activity, getString(R.string.erro_select_category), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

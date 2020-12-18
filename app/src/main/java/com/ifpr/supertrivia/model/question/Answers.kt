@@ -1,6 +1,6 @@
 package com.ifpr.supertrivia.model.question
 
-class AnswerPack(
+class Answers(
     val answers: List<Answer>,
 ) {
 }

@@ -69,7 +69,8 @@ class LoginFragment : Fragment() {
 
                 val build: AlertDialog.Builder = AlertDialog.Builder(activity)
 
-                build.setMessage(getString(R.string.loading))
+//                build.setMessage(getString(R.string.loading))
+                build.setView(R.layout.screen_load)
                  build.setCancelable(false)
 //                val gifImageView = ImageView(context)
 

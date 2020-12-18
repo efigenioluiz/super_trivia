@@ -26,5 +26,9 @@
         android:id="@+id/gameFragment"
         android:name="com.ifpr.supertrivia.fragments.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="withSetup"
+            app:argType="boolean" />
+    </fragment>
 </navigation>
