@@ -1,6 +1,9 @@
 package com.ifpr.supertrivia.dao
 
+import android.net.ConnectivityManager
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import com.ifpr.supertrivia.model.category.Category
 import com.ifpr.supertrivia.model.category.CategoryCallBack
 import com.ifpr.supertrivia.network.service.CategotyService
@@ -37,9 +40,11 @@ class CategoryDAO {
 
             override fun onFailure(call: Call<CategoryCallBack>, t: Throwable) {
                 Log.e("jsonapi",t.toString())
+                // verificar rede e mostrar dialog
             }
 
 
         })
     }
+
 }

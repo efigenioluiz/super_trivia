@@ -21,19 +21,26 @@ class GameDAO {
 
     val service = retrofit.create(GameService::class.java)
 
-    fun getGame(finished: ((Game)) -> Unit) {
+    fun startGame(token: String, finished: ((Game)) -> Unit) {
 
-        service.getGame().enqueue(object : Callback<GameCallBack> {
+        service.startGame(token).enqueue(object : Callback<GameCallBack> {
             override fun onResponse(call: Call<GameCallBack>, response: Response<GameCallBack>) {
 
                 if (!response.isSuccessful) {
-                    Log.e("jsonapi", response.body().toString())
+                    Log.e("aqui", response.body().toString())
                 } else {
                     val game = response.body()!!
 
-                    Log.e("jsonapi", game.toString())
+                    if(game.status == "success"){
+                        //starting game
+                        Log.i("game",game.status )
 
-                    finished(game.data.game)
+                        finished(game.data.game)
+                    }else{
+                        //gaming in progress
+                        //finished(game.data.game)
+                    }
+
                 }
 
             }

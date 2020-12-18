@@ -5,12 +5,13 @@ import com.ifpr.supertrivia.model.ranking.RankingCallBack
 import retrofit2.Call
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 
 interface GameService {
     @GET("/games")
-    fun getGame(): Call<GameCallBack>
+    fun startGame(@Header("Authorization") token : String): Call<GameCallBack>
 
     @DELETE("/games")
-    fun delete()
+    fun endGame(@Header("Authorization") token : String)
 }

@@ -71,4 +71,14 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         }
 
     }
+
+    fun getCategory(): Category? {
+        if (select) {
+            return categories[categorySelect]
+        }
+        return null
+    }
+
 }
+
+

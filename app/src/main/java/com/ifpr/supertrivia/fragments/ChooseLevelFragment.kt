@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.CategoryAdapter
-import kotlinx.android.synthetic.main.fragment_choose_level.*
+import com.ifpr.supertrivia.dao.CategoryDAO
+import com.ifpr.supertrivia.dao.GameDAO
+import com.ifpr.supertrivia.model.category.Category
 import kotlinx.android.synthetic.main.fragment_choose_level.view.*
+import java.lang.Integer.parseInt
 
 
 class ChooseLevelFragment : Fragment() {
@@ -29,7 +31,7 @@ class ChooseLevelFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_choose_level, container, false)
 
 
-
+        val dao = CategoryDAO()
         adapter = CategoryAdapter()
 
         view.recyclerView.adapter = adapter
@@ -52,7 +54,29 @@ class ChooseLevelFragment : Fragment() {
             }
         })
 
+        view.btPlay.setOnClickListener {
+            setSetup(
+                adapter.getCategory(),
+                parseInt(view.progress.progress.toString())
+            )
+        }
         return view
+    }
+
+    private fun setSetup(category: Category?, lvl: Int) {
+        val daoGame = GameDAO()
+
+        if (category != null) {
+
+            val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
+            val token = sharedPref?.getString("token", "")
+
+            if (token != null) {
+                daoGame.startGame(token) {
+
+                }
+            }
+        }
     }
 
 
