@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.AnswerAdapter
 import com.ifpr.supertrivia.dao.GameDAO
 import com.ifpr.supertrivia.dao.QuestionDAO
+import com.ifpr.supertrivia.model.category.Category
 import com.ifpr.supertrivia.model.question.Answer
 import com.ifpr.supertrivia.model.question.QuestionData
 import kotlinx.android.synthetic.main.fragment_game.view.*
@@ -31,6 +33,7 @@ class GameFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_game, container, false)
+
 
 
         val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
@@ -61,6 +64,7 @@ class GameFragment : Fragment() {
 
                 view.txtQuestion.text = question.problem.question
 
+
             }
 
 
@@ -76,6 +80,7 @@ class GameFragment : Fragment() {
 
             if (token != null) {
                 daoQ.existQuestion(token) {
+
 
                     alertDialog.dismiss()
 
@@ -96,7 +101,12 @@ class GameFragment : Fragment() {
             }
 
         }
-        view.btNext.setOnClickListener { nextToQuestion(token, answerAdapter.getAnswer()) }
+        view.btNext.setOnClickListener {
+            nextToQuestion(
+                token,
+                answerAdapter.getAnswer(),
+            )
+        }
 
 
         return view
@@ -112,29 +122,59 @@ class GameFragment : Fragment() {
             build.setCancelable(false)
 
 
+            buildII.setPositiveButton(getString(R.string.next)) { dialog, _ ->
+
+                daoQ.nextQuestion(token){
+                    val bundle = Bundle()
+
+                    val gson = Gson()
+                    val questionJson = gson.toJson(it)
+
+                    bundle.putBoolean("withSetup", true)
+                    bundle.putString("question", questionJson)
+
+                    findNavController().navigate(R.id.gameFragment, bundle)
+
+                    dialog.dismiss()
+                }
+
+            }
+            buildII.setNegativeButton(getString(R.string.endgame)){ dialog, _ ->
+
+
+                dao.endGame(token){
+                    findNavController().navigate(R.id.chooseLevelFragment)
+                }
+                dialog.dismiss()
+            }
+
+
             val alertDialog: AlertDialog = build.create()
             val showUser: AlertDialog = buildII.create()
 
             alertDialog.show()
+
             daoQ.answerQuestion(answer.order, token) {
                 alertDialog.dismiss()
 
+                if (it.answer.status == "incorrect") {
+                    showUser.setTitle(getString(R.string.incorrect))
+                } else {
+                    showUser.setTitle(getString(R.string.correct))
+                }
+                showUser.setCancelable(false)
                 showUser.show()
 
                 Log.i("answer", it.answer.correct_answer.toString())
                 Log.i("answer", it.answer.status)
 
 
-                buildII.setPositiveButton(R.string.next) { dialog, which ->
-
-                    //findNavController().navigate(R.id.navigateToLogin)
-                    dialog.dismiss()
-                }
             }
         } else {
             Toast.makeText(activity, getString(R.string.select_your_answer), Toast.LENGTH_SHORT)
                 .show()
         }
     }
+
 
 }

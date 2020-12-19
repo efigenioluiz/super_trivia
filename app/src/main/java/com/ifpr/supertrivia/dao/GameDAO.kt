@@ -3,6 +3,8 @@ package com.ifpr.supertrivia.dao
 import android.util.Log
 import com.ifpr.supertrivia.model.game.Game
 import com.ifpr.supertrivia.model.game.GameCallBack
+import com.ifpr.supertrivia.model.game.endgame.EndGameCallBack
+import com.ifpr.supertrivia.model.game.endgame.EndGameData
 import com.ifpr.supertrivia.network.service.GameService
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,6 +76,30 @@ class GameDAO {
             }
 
             override fun onFailure(call: Call<GameCallBack>, t: Throwable) {
+                Log.e("jsonapi", t.toString())
+            }
+
+
+        })
+    }
+    fun endGame(token: String, finished: ((EndGameData)) -> Unit) {
+
+        service.endGame(token).enqueue(object : Callback<EndGameCallBack> {
+            override fun onResponse(call: Call<EndGameCallBack>, response: Response<EndGameCallBack>) {
+
+                if (!response.isSuccessful) {
+                    Log.e("aqui", response.body().toString())
+                } else {
+                    val end = response.body()!!
+
+                    finished(end.data)
+
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<EndGameCallBack>, t: Throwable) {
                 Log.e("jsonapi", t.toString())
             }
 

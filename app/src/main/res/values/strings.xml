@@ -18,8 +18,11 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="wait_for_internet">Wait for internet</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="correct">Correct</string>
     <string name="hard">Hard</string>
     <string name="loading">Loading...</string>
+    <string name="endgame">End Game</string>
     <string name="erro_select_category">Select Category and Difficulty</string>
     <string name="no_internet">Without internet access... try again open this APP</string>
     <string name="singin">Sing In</string>

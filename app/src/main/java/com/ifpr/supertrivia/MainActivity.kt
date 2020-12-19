@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_choose_level.*
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
-
+    var snackBar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +46,13 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
 
         if (!isConnected) {
 
-
-            Log.i("network", isConnected.toString())
+            this.snackBar = Snackbar.make(findViewById(R.id.chooseLevelFragment), "You are offline", Snackbar.LENGTH_LONG) //Assume "rootLayout" as the root layout of every activity.
+            this.snackBar?.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
+            this.snackBar?.show()
         } else {
-
-            Log.i("network", isConnected.toString())
+            this.snackBar?.dismiss()
         }
     }
+
 }
 

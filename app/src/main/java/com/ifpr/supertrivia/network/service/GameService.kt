@@ -1,6 +1,7 @@
 package com.ifpr.supertrivia.network.service
 
 import com.ifpr.supertrivia.model.game.GameCallBack
+import com.ifpr.supertrivia.model.game.endgame.EndGameCallBack
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,5 +16,5 @@ interface GameService {
     ): Call<GameCallBack>
 
     @DELETE("/games")
-    fun endGame(@Header("Authorization") token : String)
+    fun endGame(@Header("Authorization") token : String):  Call<EndGameCallBack>
 }
