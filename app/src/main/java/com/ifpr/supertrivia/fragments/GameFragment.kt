@@ -8,15 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.AnswerAdapter
 import com.ifpr.supertrivia.dao.GameDAO
 import com.ifpr.supertrivia.dao.QuestionDAO
-import com.ifpr.supertrivia.model.question.Question
+import com.ifpr.supertrivia.model.question.Answer
 import com.ifpr.supertrivia.model.question.QuestionData
-import kotlinx.android.synthetic.main.fragment_choose_level.view.*
 import kotlinx.android.synthetic.main.fragment_game.view.*
 
 class GameFragment : Fragment() {
@@ -64,7 +64,7 @@ class GameFragment : Fragment() {
             }
 
 
-        }else {
+        } else {
             val build: AlertDialog.Builder = AlertDialog.Builder(activity)
             build.setView(R.layout.screen_load)
             build.setCancelable(false)
@@ -96,14 +96,45 @@ class GameFragment : Fragment() {
             }
 
         }
-        view.btNext.setOnClickListener { nextToQuestion() }
+        view.btNext.setOnClickListener { nextToQuestion(token, answerAdapter.getAnswer()) }
 
 
         return view
     }
 
-    private fun nextToQuestion() {
-        TODO("Not yet implemented")
+    private fun nextToQuestion(token: String?, answer: Answer?) {
+
+        if (answer != null && token != null) {
+
+            val build: AlertDialog.Builder = AlertDialog.Builder(activity)
+            val buildII: AlertDialog.Builder = AlertDialog.Builder(activity)
+            build.setView(R.layout.screen_load)
+            build.setCancelable(false)
+
+
+            val alertDialog: AlertDialog = build.create()
+            val showUser: AlertDialog = buildII.create()
+
+            alertDialog.show()
+            daoQ.answerQuestion(answer.order, token) {
+                alertDialog.dismiss()
+
+                showUser.show()
+
+                Log.i("answer", it.answer.correct_answer.toString())
+                Log.i("answer", it.answer.status)
+
+
+                buildII.setPositiveButton(R.string.next) { dialog, which ->
+
+                    //findNavController().navigate(R.id.navigateToLogin)
+                    dialog.dismiss()
+                }
+            }
+        } else {
+            Toast.makeText(activity, getString(R.string.select_your_answer), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 }

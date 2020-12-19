@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ifpr.supertrivia.R
+import com.ifpr.supertrivia.model.category.Category
 import com.ifpr.supertrivia.model.question.Answer
 import kotlinx.android.synthetic.main.item_answer.view.*
 
@@ -64,5 +65,11 @@ class AnswerAdapter () : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
     fun setAnswers(list: List<Answer>){
         answers = list
         notifyDataSetChanged()
+    }
+    fun getAnswer(): Answer? {
+        if (select) {
+            return answers[answerSelect]
+        }
+        return null
     }
 }

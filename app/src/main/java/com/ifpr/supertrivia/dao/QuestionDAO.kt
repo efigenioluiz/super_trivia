@@ -1,19 +1,16 @@
 package com.ifpr.supertrivia.dao
 
 import android.util.Log
-import android.widget.Toast
-import com.ifpr.supertrivia.MainActivity
-import com.ifpr.supertrivia.model.question.Question
 import com.ifpr.supertrivia.model.question.QuestionCallBack
 import com.ifpr.supertrivia.model.question.QuestionData
-import com.ifpr.supertrivia.network.service.GameService
+import com.ifpr.supertrivia.model.question.verify.VerifyCallBack
+import com.ifpr.supertrivia.model.question.verify.VerifyData
 import com.ifpr.supertrivia.network.service.QuestionService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.security.AccessController.getContext
 
 class QuestionDAO {
     val url = "https://super-trivia-server.herokuapp.com/"
@@ -71,6 +68,30 @@ class QuestionDAO {
             }
 
             override fun onFailure(call: Call<QuestionCallBack>, t: Throwable) {
+            }
+
+
+        })
+    }
+    fun answerQuestion(answer: Int,token: String, finished: (VerifyData) -> Unit) {
+
+        service.answerQuestion(token,answer).enqueue(object : Callback<VerifyCallBack> {
+            override fun onResponse(
+                call: Call<VerifyCallBack>,
+                response: Response<VerifyCallBack>
+            ) {
+
+                if (!response.isSuccessful) {
+                    Log.e("verify", response.body().toString())
+
+                } else {
+                    val verify = response.body()!!
+
+                    finished(verify.data!!)
+                }
+            }
+
+            override fun onFailure(call: Call<VerifyCallBack>, t: Throwable) {
             }
 
 

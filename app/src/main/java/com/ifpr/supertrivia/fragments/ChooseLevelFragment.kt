@@ -86,6 +86,7 @@ class ChooseLevelFragment : Fragment() {
 
                 val build: AlertDialog.Builder = AlertDialog.Builder(activity)
                 build.setView(R.layout.screen_load)
+
                 build.setCancelable(false)
 
                 val alertDialog: AlertDialog = build.create()
