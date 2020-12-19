@@ -38,7 +38,8 @@ class QuestionDAO {
                     val question = response.body()!!
 
                     Log.e("question", response.body()!!.status)
-                    Log.e("array", response.body()!!.data?.answers.toString())
+                    Log.e("array", response.body()!!.data?.problem?.answers.toString())
+
                     finished(question.data!!)
                 }
             }

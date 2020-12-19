@@ -44,8 +44,7 @@ class GameFragment : Fragment() {
         if (question != null) {
             answerAdapter = AnswerAdapter()
 
-//            answerAdapter.setAnswers(question.answers)
-//            Log.i("list", question.answers.toString())
+            answerAdapter.setAnswers(question.problem.answers)
 
             view.rcAnswer.adapter = answerAdapter
 
@@ -53,7 +52,6 @@ class GameFragment : Fragment() {
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
-//            Log.i("answer", question.answers.toString())
             view.txtQuestion.text = question.problem.question
 
         }
