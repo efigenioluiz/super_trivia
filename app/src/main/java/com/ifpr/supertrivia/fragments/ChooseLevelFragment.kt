@@ -92,7 +92,7 @@ class ChooseLevelFragment : Fragment() {
                 alertDialog.show()
 
                 daoGame.startGameWhitSetup(token, difficulty.difficulty, category.id) {
-                Log.i("DF", difficulty.difficulty)
+                    Log.i("DF", difficulty.difficulty)
 
                     daoQuestion.nextQuestion(token) {
                         val bundle = Bundle()
@@ -101,10 +101,14 @@ class ChooseLevelFragment : Fragment() {
                         val questionJson = gson.toJson(it)
 
                         bundle.putBoolean("withSetup", true)
-                        bundle.putString("question",questionJson)
+                        bundle.putString("question", questionJson)
 
                         alertDialog.dismiss()
-                        findNavController().navigate(R.id.gameFragment,bundle)
+                        findNavController().navigate(R.id.gameFragment, bundle)
+                    }
+                    daoQuestion.existQuestion(token) {
+                        alertDialog.dismiss()
+                        Toast.makeText(activity,getString(R.string.game_progress),Toast.LENGTH_SHORT).show()
                     }
 
                 }

@@ -11,4 +11,10 @@ interface QuestionService {
     @GET("/problems/next")
     @Headers("charset: utf-8")
     fun nextQuestion(@Header("Authorization") token : String): Call<QuestionCallBack>
+
+    @GET("/problems/view")
+    @Headers("charset: utf-8")
+    fun existQuestion(@Header("Authorization") token : String): Call<QuestionCallBack>
+
+
 }

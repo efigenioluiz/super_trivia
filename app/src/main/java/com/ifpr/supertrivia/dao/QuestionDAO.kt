@@ -51,4 +51,29 @@ class QuestionDAO {
 
         })
     }
+
+    fun existQuestion(token: String, finished: (QuestionData) -> Unit) {
+
+        service.existQuestion(token).enqueue(object : Callback<QuestionCallBack> {
+            override fun onResponse(
+                call: Call<QuestionCallBack>,
+                response: Response<QuestionCallBack>
+            ) {
+
+                if (!response.isSuccessful) {
+                    Log.e("question", response.body().toString())
+
+                } else {
+                    val question = response.body()!!
+
+                    finished(question.data!!)
+                }
+            }
+
+            override fun onFailure(call: Call<QuestionCallBack>, t: Throwable) {
+            }
+
+
+        })
+    }
 }

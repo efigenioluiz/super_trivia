@@ -11,8 +11,17 @@ import kotlinx.android.synthetic.main.item_answer.view.*
 class AnswerAdapter () : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
     private var answers = listOf<Answer>()
 
+    private var answerSelect: Int = 0
+    private var select: Boolean = false
 
-    override fun getItemViewType(position: Int)= R.layout.item_answer
+
+    override fun getItemViewType(position: Int): Int {
+        return if (select && position == answerSelect) {
+            R.layout.item_answer_select
+        } else {
+            R.layout.item_answer
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)=
         ViewHolder(
@@ -35,6 +44,20 @@ class AnswerAdapter () : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
         fun fillView(answer: Answer) {
 
             itemView.txtOrder.text = answer.order.toString()
+            itemView.txtDescription.text = answer.description
+
+
+            itemView.setOnClickListener {
+                select = !select
+
+                val position = answers.indexOf(answer)
+
+                answerSelect = position
+                notifyItemChanged(position)
+
+            }
+
+
         }
 
     }
