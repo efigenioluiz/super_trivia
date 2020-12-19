@@ -30,5 +30,8 @@
         <argument
             android:name="withSetup"
             app:argType="boolean" />
+        <argument
+            android:name="questionJson"
+            app:argType="string" />
     </fragment>
 </navigation>

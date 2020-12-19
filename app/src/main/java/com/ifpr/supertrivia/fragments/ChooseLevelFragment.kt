@@ -1,6 +1,7 @@
 package com.ifpr.supertrivia.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -77,13 +78,21 @@ class ChooseLevelFragment : Fragment() {
 
         if (category != null) {
             val difficulty = Difficulty(lvl)
-            Log.i("DF", difficulty.toString())
 
             val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
             val token = sharedPref?.getString("token", "")
 
             if (token != null) {
+
+                val build: AlertDialog.Builder = AlertDialog.Builder(activity)
+                build.setView(R.layout.screen_load)
+                build.setCancelable(false)
+
+                val alertDialog: AlertDialog = build.create()
+                alertDialog.show()
+
                 daoGame.startGameWhitSetup(token, difficulty.difficulty, category.id) {
+                Log.i("DF", difficulty.difficulty)
 
                     daoQuestion.nextQuestion(token) {
                         val bundle = Bundle()
@@ -94,6 +103,7 @@ class ChooseLevelFragment : Fragment() {
                         bundle.putBoolean("withSetup", true)
                         bundle.putString("question",questionJson)
 
+                        alertDialog.dismiss()
                         findNavController().navigate(R.id.gameFragment,bundle)
                     }
 

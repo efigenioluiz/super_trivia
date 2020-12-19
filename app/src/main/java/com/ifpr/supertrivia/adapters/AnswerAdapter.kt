@@ -5,14 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ifpr.supertrivia.R
-import com.ifpr.supertrivia.adapters.AnswerApdater.*
-import com.ifpr.supertrivia.model.category.Category
 import com.ifpr.supertrivia.model.question.Answer
-import com.ifpr.supertrivia.model.question.Answers
 import kotlinx.android.synthetic.main.item_answer.view.*
-import kotlinx.android.synthetic.main.item_category.view.*
 
-class AnswerApdater () : RecyclerView.Adapter<ViewHolder>() {
+class AnswerAdapter () : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
     private var answers = listOf<Answer>()
 
 
@@ -42,7 +38,8 @@ class AnswerApdater () : RecyclerView.Adapter<ViewHolder>() {
         }
 
     }
-    fun setAnswers(listAnswer: List<Answer>){
-        answers = listAnswer
+    fun setAnswers(list: List<Answer>){
+        answers = list
+        notifyDataSetChanged()
     }
 }
