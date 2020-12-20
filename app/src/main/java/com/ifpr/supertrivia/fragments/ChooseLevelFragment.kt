@@ -3,6 +3,7 @@ package com.ifpr.supertrivia.fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.ifpr.supertrivia.AcessActivity
 import com.ifpr.supertrivia.R
 import com.ifpr.supertrivia.adapters.CategoryAdapter
 import com.ifpr.supertrivia.dao.CategoryDAO
@@ -70,6 +72,7 @@ class ChooseLevelFragment : Fragment() {
         view.btRandom.setOnClickListener {
             random()
         }
+        view.btLogout.setOnClickListener { logout()}
         return view
     }
 
@@ -167,6 +170,18 @@ class ChooseLevelFragment : Fragment() {
 
 
         }
+    }
+    @SuppressLint("CommitPrefEdits")
+    private fun logout() {
+        val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
+
+        sharedPref?.edit()?.putString("password", "")?.putString("email", "")?.putString("token", "")
+            ?.apply()
+
+
+        val intent = Intent(activity, AcessActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
 }

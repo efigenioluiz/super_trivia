@@ -38,7 +38,7 @@ class ReportFragment : Fragment() {
         val finishedAt: LocalDateTime = f.toLocalDateTime()
 
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY")
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY HH:mm")
         val formatted = startedAt.format(formatter)
         val formattedII = finishedAt.format(formatter)
 

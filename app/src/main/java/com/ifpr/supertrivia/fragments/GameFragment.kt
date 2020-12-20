@@ -20,6 +20,7 @@ import com.ifpr.supertrivia.model.category.Category
 import com.ifpr.supertrivia.model.question.Answer
 import com.ifpr.supertrivia.model.question.QuestionData
 import kotlinx.android.synthetic.main.fragment_game.view.*
+import kotlinx.android.synthetic.main.screen_start_game.*
 
 class GameFragment : Fragment() {
 
@@ -68,15 +69,13 @@ class GameFragment : Fragment() {
                 view.txtQuestion.text = question.problem.question.replace("&quot;"," ' ").replace("&#039;"," ' ")
 //                view.Score.text = score.toString()
 
-
-
             }
 
 
         } else {
 
             val build: AlertDialog.Builder = AlertDialog.Builder(activity)
-            build.setView(R.layout.screen_load)
+            build.setView(R.layout.screen_start_game)
             build.setCancelable(false)
 
             val alertDialog: AlertDialog = build.create()
@@ -106,7 +105,10 @@ class GameFragment : Fragment() {
 //                    view.Score.text = sharedPref?.getString("score","0")
 
 
-
+                }
+                alertDialog.btStart.setOnClickListener {
+                    alertDialog.dismiss()
+                    findNavController().navigate(R.id.chooseLevelFragment)
                 }
 
             }
