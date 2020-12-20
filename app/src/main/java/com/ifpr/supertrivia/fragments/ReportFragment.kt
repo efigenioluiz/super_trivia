@@ -34,16 +34,13 @@ class ReportFragment : Fragment() {
         val s = ZonedDateTime.parse(endGame.game.started_at)
         val f = ZonedDateTime.parse(endGame.game.finished_at)
 
-        val startedAt: LocalDateTime = s.toLocalDateTime()
-        val finishedAt: LocalDateTime = f.toLocalDateTime()
 
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")
+        val startedAt = s.format(formatter)
+        val finishedAt = f.format(formatter)
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY HH:mm")
-        val formatted = startedAt.format(formatter)
-        val formattedII = finishedAt.format(formatter)
-
-        view.txtStartedAt.text = getString(R.string.started)+" "+formatted
-        view.txtFineshedAt.text = getString(R.string.finished)+" "+formattedII
+        view.txtStartedAt.text = getString(R.string.started)+" "+startedAt
+        view.txtFineshedAt.text = getString(R.string.finished)+" "+finishedAt
         view.txtEndScore.text = getString(R.string.endScore)+endGame.game.score.toString()
 
 
