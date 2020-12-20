@@ -36,7 +36,6 @@ class GameFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_game, container, false)
 
 
-
         val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
 
         val token = sharedPref?.getString("token", "")
@@ -66,7 +65,8 @@ class GameFragment : Fragment() {
                     LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
-                view.txtQuestion.text = question.problem.question.replace("&quot;"," ' ").replace("&#039;"," ' ")
+                view.txtQuestion.text =
+                    question.problem.question.replace("&quot;", " ' ").replace("&#039;", " ' ")
 //                view.Score.text = score.toString()
 
             }
@@ -101,9 +101,8 @@ class GameFragment : Fragment() {
                         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
-                    view.txtQuestion.text = question.problem.question.replace("&quot;"," ' ").replace("&#039;"," ' ")
-//                    view.Score.text = sharedPref?.getString("score","0")
-
+                    view.txtQuestion.text =
+                        question.problem.question.replace("&quot;", " ' ").replace("&#039;", " ' ")
 
                 }
                 alertDialog.btStart.setOnClickListener {
@@ -138,7 +137,7 @@ class GameFragment : Fragment() {
 
             buildII.setPositiveButton(getString(R.string.next)) { dialog, _ ->
 
-                daoQ.nextQuestion(token){
+                daoQ.nextQuestion(token) {
 
                     val gson = Gson()
                     val questionJson = gson.toJson(it)
@@ -153,17 +152,17 @@ class GameFragment : Fragment() {
                 }
 
             }
-            buildII.setNegativeButton(getString(R.string.endgame)){ dialog, _ ->
+            buildII.setNegativeButton(getString(R.string.endgame)) { dialog, _ ->
 
 
-                dao.endGame(token){
+                dao.endGame(token) {
 
 
                     val gson = Gson()
                     val endGame = gson.toJson(it)
                     bundle.putString("endGame", endGame)
 
-                    findNavController().navigate(R.id.reportFragment,bundle)
+                    findNavController().navigate(R.id.reportFragment, bundle)
                 }
                 dialog.dismiss()
             }
@@ -182,7 +181,7 @@ class GameFragment : Fragment() {
                 } else {
                     showUser.setTitle(getString(R.string.correct))
                 }
-                showUser.setMessage(getString(R.string.your_score)+" "+ it.answer.score.toString())
+                showUser.setMessage(getString(R.string.your_score) + " " + it.answer.score.toString())
 
                 showUser.setCancelable(false)
                 showUser.show()

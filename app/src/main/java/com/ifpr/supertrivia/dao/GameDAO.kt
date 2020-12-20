@@ -1,6 +1,7 @@
 package com.ifpr.supertrivia.dao
 
 import android.util.Log
+import com.google.gson.GsonBuilder
 import com.ifpr.supertrivia.model.game.Game
 import com.ifpr.supertrivia.model.game.GameCallBack
 import com.ifpr.supertrivia.model.game.endgame.EndGameCallBack
@@ -13,9 +14,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class GameDAO {
+    val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
     val url = "https://super-trivia-server.herokuapp.com/"
     val retrofit = Retrofit.Builder()
-        .baseUrl(url).addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(url).addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
     val service = retrofit.create(GameService::class.java)
