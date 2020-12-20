@@ -45,7 +45,7 @@ class AnswerAdapter () : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
         fun fillView(answer: Answer) {
 
             itemView.txtOrder.text = answer.order.toString()
-            itemView.txtDescription.text = answer.description
+            itemView.txtDescription.text = answer.description.replace("&quot;"," ' ").replace("&#039;"," ' ")
 
 
             itemView.setOnClickListener {

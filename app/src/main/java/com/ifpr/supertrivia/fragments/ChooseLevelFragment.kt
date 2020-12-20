@@ -67,6 +67,9 @@ class ChooseLevelFragment : Fragment() {
                 parseInt(view.progress.progress.toString())
             )
         }
+        view.btRandom.setOnClickListener {
+            random()
+        }
         return view
     }
 
@@ -94,9 +97,12 @@ class ChooseLevelFragment : Fragment() {
 
                 daoGame.startGameWhitSetup(token, difficulty.difficulty, category.id) {
                     Log.i("DF", difficulty.difficulty)
+                    val bundle = Bundle()
+
+                    bundle.putInt("score",it.score)
 
                     daoQuestion.nextQuestion(token) {
-                        val bundle = Bundle()
+
 
                         val gson = Gson()
                         val questionJson = gson.toJson(it)
@@ -120,6 +126,47 @@ class ChooseLevelFragment : Fragment() {
                 .show()
         }
     }
+    private fun random(){
+        val daoGame = GameDAO()
+        val daoQuestion = QuestionDAO()
 
+
+        val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val token = sharedPref?.getString("token", "")
+
+        if (token != null) {
+            val build: AlertDialog.Builder = AlertDialog.Builder(activity)
+            build.setView(R.layout.screen_load)
+
+            build.setCancelable(false)
+
+            val alertDialog: AlertDialog = build.create()
+            alertDialog.show()
+
+            daoGame.startGame(token){
+                val bundle = Bundle()
+
+                bundle.putInt("score",it.score)
+
+                daoQuestion.nextQuestion(token) {
+                    alertDialog.dismiss()
+
+                    val gson = Gson()
+                    val questionJson = gson.toJson(it)
+
+                    bundle.putBoolean("withSetup", true)
+                    bundle.putString("question", questionJson)
+
+                    findNavController().navigate(R.id.gameFragment, bundle)
+                }
+            }
+            daoQuestion.existQuestion(token) {
+                alertDialog.dismiss()
+                Toast.makeText(activity,getString(R.string.game_progress),Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+    }
 
 }

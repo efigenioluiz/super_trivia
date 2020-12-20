@@ -39,6 +39,9 @@ class GameFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
 
         val token = sharedPref?.getString("token", "")
+
+        val score = arguments?.getInt("score", 0)
+
         val withSetup = arguments?.getBoolean("withSetup")
 
         if (token != null && withSetup == true) {
@@ -62,13 +65,16 @@ class GameFragment : Fragment() {
                     LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
-                view.txtQuestion.text = question.problem.question
+                view.txtQuestion.text = question.problem.question.replace("&quot;"," ' ").replace("&#039;"," ' ")
+//                view.Score.text = score.toString()
+
 
 
             }
 
 
         } else {
+
             val build: AlertDialog.Builder = AlertDialog.Builder(activity)
             build.setView(R.layout.screen_load)
             build.setCancelable(false)
@@ -79,6 +85,7 @@ class GameFragment : Fragment() {
             var question: QuestionData
 
             if (token != null) {
+
                 daoQ.existQuestion(token) {
 
 
@@ -95,9 +102,13 @@ class GameFragment : Fragment() {
                         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
 
-                    view.txtQuestion.text = question.problem.question
+                    view.txtQuestion.text = question.problem.question.replace("&quot;"," ' ").replace("&#039;"," ' ")
+//                    view.Score.text = sharedPref?.getString("score","0")
+
+
 
                 }
+
             }
 
         }
@@ -114,6 +125,7 @@ class GameFragment : Fragment() {
 
     private fun nextToQuestion(token: String?, answer: Answer?) {
 
+        val bundle = Bundle()
         if (answer != null && token != null) {
 
             val build: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -125,13 +137,13 @@ class GameFragment : Fragment() {
             buildII.setPositiveButton(getString(R.string.next)) { dialog, _ ->
 
                 daoQ.nextQuestion(token){
-                    val bundle = Bundle()
 
                     val gson = Gson()
                     val questionJson = gson.toJson(it)
 
                     bundle.putBoolean("withSetup", true)
                     bundle.putString("question", questionJson)
+
 
                     findNavController().navigate(R.id.gameFragment, bundle)
 
@@ -143,7 +155,13 @@ class GameFragment : Fragment() {
 
 
                 dao.endGame(token){
-                    findNavController().navigate(R.id.chooseLevelFragment)
+
+
+                    val gson = Gson()
+                    val endGame = gson.toJson(it)
+                    bundle.putString("endGame", endGame)
+
+                    findNavController().navigate(R.id.reportFragment,bundle)
                 }
                 dialog.dismiss()
             }
@@ -162,6 +180,8 @@ class GameFragment : Fragment() {
                 } else {
                     showUser.setTitle(getString(R.string.correct))
                 }
+                showUser.setMessage(getString(R.string.your_score)+" "+ it.answer.score.toString())
+
                 showUser.setCancelable(false)
                 showUser.show()
 

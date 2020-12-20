@@ -33,5 +33,20 @@
         <argument
             android:name="questionJson"
             app:argType="string" />
+        <argument
+            android:name="score"
+            app:argType="integer" />
+        <action
+            android:id="@+id/navigateToReportFragment"
+            app:destination="@id/reportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.ifpr.supertrivia.fragments.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" >
+        <argument
+            android:name="endGame"
+            app:argType="string" />
     </fragment>
 </navigation>

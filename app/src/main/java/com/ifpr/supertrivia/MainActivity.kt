@@ -1,6 +1,9 @@
 package com.ifpr.supertrivia
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -54,5 +57,17 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
+    private fun logout() {
+        val sharedPref = this?.getSharedPreferences("user", Context.MODE_PRIVATE)
+
+        sharedPref?.edit()?.putString("password", "")?.putString("email", "")?.putString("token", "")
+            ?.apply()
+
+
+        val intent = Intent(this, AcessActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
 }
 
