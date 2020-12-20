@@ -26,6 +26,9 @@
     <string name="your_score">Your Score:</string>
     <string name="endgame">End Game</string>
     <string name="report">Report</string>
+    <string name="started">Started At: </string>
+    <string name="finished">Finished At: </string>
+    <string name="endScore">Score: </string>
     <string name="erro_select_category">Select Category and Difficulty</string>
     <string name="no_internet">Without internet access... try again open this APP</string>
     <string name="singin">Sing In</string>
